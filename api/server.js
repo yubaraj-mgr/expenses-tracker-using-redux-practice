@@ -1,8 +1,8 @@
 import express, { json } from "express";
 import cors from "cors";
-import { dbConnect } from "./config/dbConnect.js";
-import userRouter from "./users/router/userRouter.js";
-
+import { dbConnect } from "./src/config/dbConnect.js";
+import userRouter from "./src/users/router/userRouter.js";
+import transactionsRouter from "./src/transactions/router/transactionsRouter.js";
 // 1. creatig express app
 
 const app = express();
@@ -18,7 +18,10 @@ app.use(cors());
 dbConnect();
 
 // 5. Pusing task to router for cleaner code
-app.use("/api/v1/", userRouter);
+app.use("/api/v1/user", userRouter);
+
+// 6. Pusing transaction task to router for cleaner code both have unique end point
+app.use("/api/v1/transactions", transactionsRouter);
 
 app.listen(portNum, (error) => {
   console.log("Your server is running on http://localhost:" + portNum);
